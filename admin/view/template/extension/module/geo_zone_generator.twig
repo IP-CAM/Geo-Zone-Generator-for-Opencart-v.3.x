@@ -1,0 +1,165 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <button type="submit" form="form-gdpr" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a>
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  <!-- container-fluid -->
+  <div class="container-fluid">
+
+    {% if (error_warning) %}
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+
+    <!-- panel -->
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+        </div>
+
+        <!-- panel-body -->
+        <div class="panel-body">
+          <!-- tabs -->
+          <ul class="nav nav-tabs" id="language">
+              <li class="active"><a href="#zones" data-toggle="tab"> {{ text_zones }}</a></li>
+              <li><a href="#geo-zones" data-toggle="tab"> {{ text_geo_zones }}</a></li>
+          </ul>
+          <!-- tabs -->
+
+            <!-- panes -->
+            <div class="tab-content">
+                <div class="tab-pane active" id="zones">
+                    <h3>{{ text_zones_intro }}</h3>
+
+                    {% for country in countries %}
+                      <div class="zone-edit-wrapper">
+                        <div class="zone-edit-text">{{ text_install_country_zones }} {{ country.name }}</div>
+                        <button id="{{ country.iso_code_2 }}" class="button-generate-zones btn btn-small btn-primary" type="button" title="{{ button_generate_zones }} {{ country.name }}" {% if country.zones_exist_in_oc %}disabled{% endif %}><i class="fa fa-cog"></i> {{ button_generate_zones }} {{ country.name }}</button>
+                        {% if country.zones_exist_in_oc %}
+                        <div id="{{ country.iso_code_2 }}-feedback">{{ text_already_installed }} {{ country.name }}</div>
+                        {% endif %}
+
+                        {% if not country.zones_exist_in_oc %}
+                          <p>{{ text_zones_to_be_installed }} {{ country.name }}</p>
+                          <ul>
+                          {% for zone in country.zones %}
+                            <li>{{ zone.name }} ({{ zone.code }})</li>
+                          {% endfor %}
+                          </ul>
+                        {% endif %}
+                        <div class="alert alert-danger" id="{{ country.iso_code_2 }}-error" style="display:none"></div>
+                        <div class="alert alert-success" id="{{ country.iso_code_2 }}-success" style="display:none"></div>
+                      </div>
+                    {% endfor %}
+                </div>
+
+                <div class="tab-pane" id="geo-zones">
+                    <p>Geo Zones</p>
+                </div>
+            </div>
+            <!-- panes -->
+
+        </div>
+        <!-- panel-body -->
+    </div>
+    <!-- panel -->
+  </div>
+  <!-- container-fluid -->
+
+<style>
+.zone-edit-text {
+  font-size:1.1em;
+  font-weight: 700;
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+.zone-edit-wrapper {
+  padding: 10px;
+}
+</style>
+
+<script type="text/javascript"><!--
+
+$('.button-generate-zones').on('click', function(e) {
+    var iso_code_2 = $(this).attr("id");
+    var url = 'index.php?route=extension/module/geo_zone_generator/generateZones&iso_code_2=' + iso_code_2 + '&user_token={{ user_token }}';
+    console.log(url);
+    console.log('#' + iso_code_2);
+    $.ajax({
+      url: url,
+      type: 'post',
+      dataType: 'json',
+      beforeSend: function() {
+        $('#' + iso_code_2).prop('disabled', true);
+        console.log('before');
+      },
+      complete: function() {
+        $('#' + iso_code_2).prop('disabled', false);
+        console.log('complete');
+      },
+      success: function(json) {
+        $('#' + iso_code_2).prop('disabled', true);
+        if(json.error) {
+          $('#' + iso_code_2 + '-error').html(json.error);
+          $('#' + iso_code_2 + '-error').show();
+        } else {
+          $('#' + iso_code_2 + '-success').html(json.result);
+          $('#' + iso_code_2 + '-success').show();
+        }   
+        console.log(json);
+      }
+    });
+});
+
+
+$('#deactivateLicense').on('click', function(e) {
+  e.preventDefault();
+    //&filter_name=' +  encodeURIComponent(request)
+    var url = 'index.php?route=extension/module/gdpr/checklicense&user_token={{ user_token }}';
+
+    $.ajax({
+      url: url,
+      type: 'post',
+      dataType: 'json',
+      data: { action: 'deactivate' },
+      beforeSend: function() {
+        $('#deactivateLicense').button('{{ gdpr_checking_license }}');
+      },
+      complete: function() {
+        $('#deactivateLicense').button('{{ gdpr_deactivate_license }}');
+      },
+      success: function(json) {
+        //$('.alert-success, .alert-danger').remove();
+        console.log(json);
+        var data = json[0];
+        if(data.status == 'success') {
+          $('#licenseActivationContainer').html('<div class="alert alert-success"><i class="fa fa-check-circle"></i> '+ data.message+'</div>');
+          $('#activateLicense').show();
+          $('#deactivateLicense').hide();
+          $('#licenseInfoContainer').html();
+        }
+        else {
+          $('#licenseActivationContainer').html('<div class="alert alert-danger"><i class="fa fa-check-circle"></i> '+ data.message+' <a href="https://www.willows-consulting.com/license-faq/" target="_blank">{{ gdpr_purchase_new_license }}</a></div>');
+
+        }
+
+      }
+    });
+});
+
+//--></script>
+
+{{ footer }}
