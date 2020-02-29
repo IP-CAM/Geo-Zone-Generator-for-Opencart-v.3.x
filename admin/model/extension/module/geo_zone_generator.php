@@ -7,17 +7,105 @@ class ModelExtensionModuleGeoZoneGenerator extends Model {
             'iso_code_3' => 'HUN',
             'zones' => array(
                 1 => array(
-                    'name' => 'Test 1',
-                    'iso_2' => 'TEST1',
-                    'code' => 'TEST1',
+                    'name' => 'Baranya',
+                    'code' => 'HU-BA',
                     'status' => 1
                 ),
                 2 => array(
-                    'name' => 'Test 2',
-                    'iso_2' => 'TEST2',
-                    'code' => 'TEST2',
+                    'name' => 'Bács-Kiskun',
+                    'code' => 'HU-BK',
                     'status' => 1
-                )
+                ),
+                3 => array(
+                    'name' => 'Békés',
+                    'code' => 'HU-BE',
+                    'status' => 1
+                ),
+                4 => array(
+                    'name' => 'Borsod-Abaúj-Zemplén',
+                    'code' => 'HU-BZ',
+                    'status' => 1
+                ),
+                5 => array(
+                    'name' => 'Budapest',
+                    'code' => 'HU-BU',
+                    'status' => 1
+                ),
+                6 => array(
+                    'name' => 'Csongrád',
+                    'code' => 'HU-CS',
+                    'status' => 1
+                ),
+                7 => array(
+                    'name' => 'Fejér',
+                    'code' => 'HU-FE',
+                    'status' => 1
+                ), 
+                8 => array(
+                    'name' => 'Győr-Moson-Sopron',
+                    'code' => 'HU-GS',
+                    'status' => 1
+                ),
+                9 => array(
+                    'name' => 'Hajdú-Bihar',
+                    'code' => 'HU-HB',
+                    'status' => 1
+                ),
+                10 => array(
+                    'name' => 'Heves',
+                    'code' => 'HU-HE',
+                    'status' => 1
+                ),
+                11 => array(
+                    'name' => 'Jász-Nagykun-Szolnok',
+                    'code' => 'HU-JN',
+                    'status' => 1
+                ),
+                12 => array(
+                    'name' => 'Komárom-Esztergom',
+                    'code' => 'HU-KE',
+                    'status' => 1
+                ),
+                13 => array(
+                    'name' => 'Nógrád',
+                    'code' => 'HU-NO',
+                    'status' => 1
+                ),
+                14 => array(
+                    'name' => 'Pest',
+                    'code' => 'HU-PE',
+                    'status' => 1
+                ),
+                15 => array(
+                    'name' => 'Somogy',
+                    'code' => 'HU-SO',
+                    'status' => 1
+                ),
+                16 => array(
+                    'name' => 'Szabolcs-Szatmár-Bereg',
+                    'code' => 'HU-SZ',
+                    'status' => 1
+                ),
+                17 => array(
+                    'name' => 'Tolna',
+                    'code' => 'HU-TO',
+                    'status' => 1
+                ),
+                18 => array(
+                    'name' => 'Vas',
+                    'code' => 'HU-VA',
+                    'status' => 1
+                ),
+                19 => array(
+                    'name' => 'Veszprém',
+                    'code' => 'HU-VE',
+                    'status' => 1
+                ),
+                20 => array(
+                    'name' => 'Zala',
+                    'code' => 'HU-ZA',
+                    'status' => 1
+                ),
             )
         ),
         'RD' => array(
@@ -27,25 +115,21 @@ class ModelExtensionModuleGeoZoneGenerator extends Model {
             'zones' => array(
                 1 => array(
                     'name' => 'Novigrad',
-                    'iso_2' => '',
                     'code' => 'NOVIGRAD',
                     'status' => 0
                 ),
                 2 => array(
                     'name' => 'Oxenfurt',
-                    'iso_2' => '',
                     'code' => 'OXENFURT',
                     'status' => 0 
                 ),
                 3 => array(
                     'name' => 'Rinde',
-                    'iso_2' => '',
                     'code' => 'RINDE',
                     'status' => 0 
                 ),
                 4 => array(
                     'name' => 'Tretogor',
-                    'iso_2' => '',
                     'code' => 'TRETOGOR',
                     'status' => 0 
                 ),
